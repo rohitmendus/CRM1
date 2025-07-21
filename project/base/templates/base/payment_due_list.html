@@ -1,0 +1,33 @@
+{% extends 'accounts/main.html' %} 
+
+{% load widget_tweaks %} 
+
+{% block title%}Payment Due List{% endblock %} 
+
+{% block content %}
+<div class="container my-4">
+  <h3 class="my-5">Payment Due List</h3>
+  <div class="table-responsive">
+    <table class="table table-bordered align-middle">
+      <thead class="table-light">
+        <tr>
+          <th scope="col">Sl. No</th>
+          <th scope="col">Name</th>
+          <th scope="col">Total</th>
+          <th scope="col">Balance</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for pay in payment_due_list %}
+        <tr>
+          <td>{{ forloop.counter }}</td>
+          <td>{{ pay.customer }}</td>
+          <td>{{ pay.estimate_amount }}</td>
+          <td>{{ pay.get_amount_left }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

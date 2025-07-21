@@ -1,0 +1,62 @@
+{% load widget_tweaks %}
+<form action="{% url 'edit_user' form.instance.id %}" method="POST" id='editUserForm'>
+    {% csrf_token %}
+	<div class="modal-header">
+		<h5 class="modal-title" id="editModalLabel">Edit User</h5>
+		<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	</div>
+	<div class="modal-body">
+		<div class="row justify-content-center mb-4">
+            <div class="col-12">
+                {% csrf_token %}
+
+                <div class="row mb-4">
+                <div class="col-md-6">
+                    <div class="form-floating">
+                    {% render_field form.first_name class="form-control" placeholder="First Name" %}
+                    <label for="{{ form.first_name.id_for_label }}">First Name</label>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-floating">
+                    {% render_field form.last_name class="form-control" placeholder="Last Name" %}
+                    <label for="{{ form.last_name.id_for_label }}">Last Name</label>
+                    </div>
+                </div>
+                </div>
+
+                <div class="row mb-4">
+                <div class="col-md-6">
+                    <div class="form-floating">
+                    {% render_field form.username class="form-control" placeholder="Username" %}
+                    <label for="{{ form.username.id_for_label }}">Username</label>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-floating">
+                    {% render_field form.email class="form-control" placeholder="Email" %}
+                    <label for="{{ form.email.id_for_label }}">Email</label>
+                    </div>
+                </div>
+                </div>
+
+                <div class="row mb-4">
+                <div class="col-md-6">
+                    <div class="form-floating">
+                    {% render_field form.role class="form-select" %}
+                    <label for="{{ form.role.id_for_label }}">Role</label>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+	</div>
+	<div class="modal-footer">
+		<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+		<button type="submit" class="btn btn-primary" id="edit-user-btn">Save Changes</button>
+	</div>
+</form>
+
+<script>
+	$("#editModalUser").modal('show');
+</script>

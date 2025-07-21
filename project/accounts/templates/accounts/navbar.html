@@ -1,0 +1,71 @@
+{% load static %}
+<nav class="sidebar position-fixed" id="sidebar">
+
+  <div class="container-fluid p-4 bg-white mb-3">
+    <a href="#">
+      <img
+        src="{% static 'base/images/logo.png' %}"
+        height="50"
+        width="200"
+        id="large-logo"
+        class="logo"
+      />
+      <img
+        src="{% static 'base/images/small-logo.jpg' %}"
+        height="50"
+        width="50"
+        id="small-logo"
+        class="d-none logo"
+      />
+    </a>
+  </div>
+
+  <div class="menu-item">
+    <i class="fas fa-home"></i>
+    <a class="menu-label text-white text-decoration-none" href="{% url 'dashboard' %}">Dashboard</a>
+  </div>
+
+  {% if request.user.role == 'admin' or request.user.role == 'manager' %}
+  <div class="menu-item dpdown">
+    <i class="fas fa-briefcase"></i>
+    <span class="menu-label">Management</span>
+    <span class="menu-label">&#9662;</span>
+  </div>
+  <div class="submenu">
+    <a href="{% url 'service' %}">Service Types</a>
+    <a href="{% url 'project' %}">Project Types</a>
+  </div>
+  {% endif %}
+
+  {% if request.user.role == 'admin' or request.user.role == 'assistant' or request.user.role == 'engineer' or request.user.role == 'manager' %}
+  <div class="menu-item dpdown">
+    <i class="fas fa-users"></i>
+    <span class="menu-label">Customer Management</span>
+    <span class="menu-label">&#9662;</span>
+  </div>
+  <div class="submenu">
+    {% if request.user.role == 'admin' or request.user.role == 'assistant' or request.user.role == 'manager' %}
+    <a href="{% url 'enquiry' %}">Enquiry</a>
+    <a href="{% url 'follow_up' %}">Follow Up List</a>
+    <a href="{% url 'dropped_list' %}">Dropped List</a>
+    {% endif %}
+    <a href="{% url 'work_list' %}">Work List</a>
+    <a href="{% url 'completed_work_list' %}">Completed Work List</a>
+  </div>
+  {% endif %}
+
+  {% if request.user.role == 'admin' or request.user.role == 'manager' %}
+  <div class="menu-item">
+    <i class="fas fa-user-cog"></i>
+    <a class="menu-label text-white text-decoration-none" href="{% url 'users' %}">User Management</a>
+  </div>
+  <div class="menu-item">
+    <i class="fas fa-credit-card"></i>
+    <a class="menu-label text-white text-decoration-none" href="{% url 'payments' %}">Payments</a>
+  </div>
+  <div class="menu-item">
+    <i class="fas fa-file-alt"></i>
+    <span class="menu-label">Reports</span>
+  </div>
+  {% endif %}
+</nav>

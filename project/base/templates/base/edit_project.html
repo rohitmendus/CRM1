@@ -1,0 +1,26 @@
+{% load widget_tweaks %}
+<form action="{% url 'edit_project' form.instance.id %}" method="POST" id='editProjectForm'>
+    {% csrf_token %}
+	<div class="modal-header">
+		<h5 class="modal-title" id="editModalLabel">Edit Project</h5>
+		<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	</div>
+	<div class="modal-body">
+		<div class="row mb-3">
+	        <div class="col-md-12">
+	            <div class="form-floating mb-3 mb-md-0">
+	            	{% render_field form.project_type class="form-control" id="editProjectType" placeholder="Type Here" %}
+	                <label for="editProjectType">Project Type</label>
+	            </div>
+	        </div>
+	    </div>
+	</div>
+	<div class="modal-footer">
+		<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+		<button type="submit" class="btn btn-primary" id="edit-user-btn">Save Changes</button>
+	</div>
+</form>
+
+<script>
+	$("#editModalProject").modal('show');
+</script>

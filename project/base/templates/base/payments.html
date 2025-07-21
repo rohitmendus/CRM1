@@ -1,0 +1,50 @@
+{% extends 'accounts/main.html' %} 
+{% load widget_tweaks %}
+
+{% block title %}Payments{% endblock %} 
+
+{% block content %}
+<div class="container my-4">
+  <div class="mt-5">
+    <h3 class="my-4">Payments</h3>
+    <table id="paymentsTable" class="display">
+        <thead>
+            <tr>
+            <th>Sl No.</th>
+            <th>Work</th>
+            <th>Amount</th>
+            <th>Mode</th>
+            <th>Payment At</th>
+            <th>Amount Left</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for payment in payments %}
+            <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ payment.work.customer.name }}<br>
+                <strong>Project Type:</strong>{{ payment.work.project_type }}<br>
+                <strong>Service Types:</strong>
+                {% for service in payment.work.service_types.all %}
+                {{ service }},
+                {% endfor %}
+            </td>
+            <td>{{ payment.amount }}</td>
+            <td>{{ payment.get_mode_display }}</td>
+            <td>{{ payment.payment_at }}</td>
+            <td>{{ payment.work.get_amount_left }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    $(document).ready(function () {
+      $('#paymentsTable').DataTable();
+    });
+</script>
+{% endblock scripts %}

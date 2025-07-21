@@ -1,0 +1,129 @@
+{% extends 'accounts/main.html' %} 
+
+{% block title %}Follow Up Details{% endblock %} 
+
+{% block content %}
+{% if form_errors %}
+  <div class="alert alert-danger alert-dismissible fade show" role="alert">
+    <ul>
+    {% for error in form_errors %}
+      <li>{{ error }}</li>
+    {% endfor %}
+    </ul>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+{% endif %}
+
+<div class="container my-4">
+  <h3 class="mb-5">Follow Up Details</h3>
+
+  <div class="table-responsive">
+    <table class="table table-bordered align-middle">
+      <thead class="table-light">
+        <tr>
+          <th scope="col">Sl. No</th>
+          <th scope="col">Customer Details</th>
+          <th scope="col">Service Types</th>
+          <th scope="col">Project Type</th>
+          <th scope="col">Status</th>
+          <th scope="col">Prop/Quot Required</th>
+          <th scope="col">Estimate Amount</th>
+          <th scope="col">Plot/Land Area</th>
+          <th scope="col">Next Follow Up On</th>
+          <th scope="col">Actions</th>
+        </tr>
+      </thead>
+      <tbody class="text-center">
+        {% for enquiry in enquiries %}
+        <tr>
+          <td>{{ forloop.counter }}</td>
+          <td>{{ enquiry.customer_name }}<br>
+            {{ enquiry.address }}<br>
+            {{ enquiry.district }}, {{ enquiry.state }}
+          </td>
+          <td>
+            {% for service in enquiry.service_types.all %}
+            {{ service }},<br>
+            {% endfor %}
+          </td>
+          <td>{{ enquiry.project_type }}</td>
+          <td>{{ enquiry.get_status_display }}</td>
+          <td>
+            {% if enquiry.proposal_required %}
+            Yes
+            {% else %}
+            No
+            {% endif %}
+          </td>
+          <td>{{ enquiry.estimate_amount }}</td>
+          <td>{{ enquiry.plot_area }} {{ enquiry.plot_unit }}</td>
+          <td>{{ enquiry.next_follow_up }}</td>
+          <td>
+            <div class="dropdown">
+              <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Actions
+              </button>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item view-enquiry" hx-get="{% url 'view_enquiry' enquiry.id %}" hx-trigger="click" hx-swap="outerHTML" hx-target="#viewEnquiryContent" style="cursor: pointer;">👁️ View</a></li>
+                <li><a class="dropdown-item edit-enquiry" hx-get="{% url 'edit_enquiry' enquiry.id %}" hx-trigger="click" hx-swap="outerHTML" hx-target="#editEnquiryForm" style="cursor: pointer;">✏️ Edit</a></li>
+                <li><a class="dropdown-item" hx-get="{% url 'add_follow_up' enquiry.id %}" hx-trigger="click" hx-swap="outerHTML" hx-target="#FollowUpContainer" style="cursor: pointer;">📝 Follow Up</a></li>
+                <li><a class="dropdown-item dlt-enquiry" href="{% url 'drop_enquiry' enquiry.id %}">🗑️ Drop</a></li>
+              </ul>
+            </div>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- View Modal -->
+<div class="modal fade" id="viewModalEnquiry" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div id="viewEnquiryContent">
+
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Edit Modal -->
+<div class="modal fade" id="editModalEnquiry" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-xl">
+    <div class="modal-content">
+    	<form id='editEnquiryForm'>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Add Follow Up Modal -->
+<div class="modal fade" id="addFollowUpModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-xl">
+    <div class="modal-content" id='FollowUpContainer'>
+    </div>
+  </div>
+</div>
+
+<!-- Delete Modal -->
+<div class="modal fade" id="deleteModalEnquiry" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Drop Enquiry</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to drop this enquiry?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" id="deleteEnquiryButton">Delete</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+{% endblock %}

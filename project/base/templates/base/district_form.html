@@ -1,0 +1,5 @@
+{% load widget_tweaks %}
+<div class="form-floating mb-3" id="districtContainer" hx-get="{% url 'load_districts' %}"   hx-trigger="change from:#state" hx-target="#districtContainer" hx-swap="outerHTML" hx-include="[name='state']">
+    {% render_field form.district class="form-select" id="district" required=True %}
+    <label for="district">District *</label>
+</div>

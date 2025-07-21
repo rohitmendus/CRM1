@@ -1,0 +1,73 @@
+{% load widget_tweaks %}
+{{ form.media }}
+<div class="modal-content" id="AddPaymentContainer">
+    <div class="row g-0">
+
+      <!-- Left: Details Section -->
+      <div class="col-md-4 border-end p-4 bg-light">
+        <h5 class="card-title mb-3">Customer Details</h5>
+        <p>
+            <strong>Customer Details:</strong><br>
+            {{ work.customer.name }}<br>
+            {{ work.customer.address }}<br>
+            {{ work.customer.district }}, {{ work.customer.state }}
+        </p>
+        <p>
+            <strong>Service Types:</strong>
+            {% for service in work.service_types.all %}
+            {{ service }},<br>
+            {% endfor %}
+        </p>
+        <p><strong>Estimate Amount:</strong> {{ work.estimate_amount }}</p>
+        <p><strong>Amount Left:</strong> {{ work.get_amount_left }}</p>
+        <p>
+            <strong>Proposal Required:</strong>
+            {% if work.proposal_required %}
+            Yes
+            {% else %}
+            No
+            {% endif %}
+        </p>
+        <p><strong>Status:</strong> {{ work.get_status_display }}</p>
+      </div>
+
+      <!-- Right: Form Section -->
+      <div class="col-md-8 p-4">
+        <h5 class="mb-3">Add Payment</h5>
+        <form method="post" action="{% url 'add_payment' work.id %}">
+          {% csrf_token %}
+          <div class="row mb-3">
+            <div class="col-md-6">
+                <div class="form-floating mb-3">
+                    {% render_field form.amount class="form-control" id="amount" placeholder="amount"  %}
+                    <label for="amount">Amount (INR)</label>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-floating mb-3">
+                    {% render_field form.mode class="form-select" id="mode" %}
+                    <label for="mode">Mode *</label>
+                </div>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <div class="col-md-6">
+                <div class="d-flex align-items-end">
+                    <label class="form-label me-2 w-25">{{ form.payment_at.label }}</label>
+                    {% render_field form.payment_at %}
+                </div>
+            </div>
+          </div>
+
+          <div class="btn-wrapper mt-5 justify-content-center d-flex">
+            <button class="btn btn-primary me-4" type="submit">Save</button>
+            <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Cancel</button>
+          </div>
+        </form>
+      </div>
+    </div>
+</div>
+<script>
+    $('#addPaymentModal').modal('show');
+
+</script>

@@ -1,0 +1,21 @@
+{% load static %}
+<nav class="navbar bg-body-tertiary">
+  <div class="container-fluid">
+    <button class="toggle-btn navbar-toggler" type="button">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="d-flex align-items-center gap-3">
+      <div class="d-flex align-items-center">
+        <img src="{% static 'base/images/user.png' %}" alt="User" width="35" height="35" class="rounded-circle me-2" />
+        <div class="d-none d-sm-block text-center">
+          <div class="fw-semibold">{{ request.user.first_name }} {{ request.user.last_name }}</div>
+          <small class="text-muted">{{ request.user.get_role_display }}</small>
+        </div>
+      </div>
+      <form method="post" action="{% url 'logout' %}">
+        {% csrf_token %}
+        <button type="submit" class="fas fa-sign-out-alt me-1 btn btn-outline-danger btn-sm ms-3">Logout</button>
+      </form>
+    </div>
+  </div>
+</nav>

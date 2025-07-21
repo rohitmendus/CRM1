@@ -1,0 +1,91 @@
+{% extends 'accounts/main.html' %} 
+{% load widget_tweaks %}
+
+{% block title %}Service Details{% endblock %} 
+
+{% block content %}
+<div class="container my-4">
+  <h3 class="mb-4">Service Type</h3>
+
+  <div class="row justify-content-center mb-4">
+    <div class="col-md-10">
+      <form action="{% url 'service' %}" method="POST">
+        {% csrf_token %}
+        <div class="row mb-3 align-items-center">
+          <label for="serviceType" class="col-auto col-form-label text-end">Service Types</label>
+          <div class="col">
+            {% render_field form.service_type class="form-control" id="serviceType" placeholder="Type Here" %}
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col offset-sm-2 d-flex gap-2">
+            <button type="reset" class="btn btn-secondary">Cancel</button>
+            <button type="submit" class="btn btn-primary">Add</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <h3 class="mb-3 mt-5">Available Service Types</h3>
+  <div class="table-responsive">
+    <table class="table table-bordered align-middle">
+      <thead class="table-light">
+        <tr>
+          <th scope="col">Sl. No</th>
+          <th scope="col">Service Type</th>
+          <th scope="col">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for service in services %}
+        <tr>
+          <td>{{ forloop.counter }}</td>
+          <td>{{ service }}</td>
+          <td>
+            <div class="dropdown">
+              <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Actions
+              </button>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item edit-service" hx-get="{% url 'edit_service' service.id %}" hx-trigger="click" hx-swap="outerHTML" hx-target="#editServiceForm" style="cursor: pointer;">✏️ Edit</a></li>
+                <li><a class="dropdown-item dlt-service" href="{% url 'delete_service' service.id %}">🗑️ Delete</a></li>
+              </ul>
+            </div>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+<!-- Delete Modal -->
+<div class="modal fade" id="deleteModalService" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Delete Service</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to delete this service?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" id="deleteServiceButton">Delete</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Edit Modal -->
+<div class="modal fade" id="editModalService" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+    	<form id='editServiceForm'>
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

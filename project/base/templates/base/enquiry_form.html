@@ -1,0 +1,201 @@
+{% load widget_tweaks %}
+
+{% if success %}
+<div class="alert alert-success" role="alert">
+  <div class="d-flex justify-content-between">
+    <h4 class="alert-heading">Success!</h4>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+  <p>Enquiry has been successfuly submittedd!</p>
+</div>
+{% endif %}
+
+<form hx-post="{% url 'enquiry' %}" method="POST" id="enquiryForm" hx-target="#enquiryForm" hx-swap="outerHTML">
+    {% csrf_token %}
+    <div class="row mb-3">
+        <div class="col-md-6">
+            <div class="form-floating mb-3">
+                {% render_field form.customer_name class="form-control" id="customerName" placeholder="Customer Name" %}
+                <label for="customerName">Customer Name *</label>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-floating mb-3">
+                {% render_field form.state class="form-select" id="state" required=True %}
+                <label for="state">State *</label>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-floating mb-3" id="districtContainer" hx-get="{% url 'load_districts' %}"
+                hx-trigger="change from:#state" hx-target="#districtContainer" hx-swap="outerHTML"
+                hx-include="[name='state']">
+                {% render_field form.district class="form-select" id="district" required=True %}
+                <label for="district">District *</label>
+            </div>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col-md-1 col-3">
+            <div class="form-floating mb-3">
+                <select name="mobile_number_0" id="countryCode" class="form-select">
+                    {% for code, label in form.fields.mobile_number.widget.widgets.0.choices %}
+                        <option value="{{ code }}"
+                        {% if code == 'IN' %}selected{% endif %}
+                        >{{ label }}</option>
+                    {% endfor %}
+                </select>
+                <label for="countryCode">Code</label>
+            </div>
+        </div>
+        <div class="col-md-5 col-9">
+            <div class="form-floating mb-3">
+                <input type="tel" name="mobile_number_1" id="mobileNumber" class="form-control"
+                    value="{{ form.data.mobile_number_1 }}" placeholder="Mobile Number" />
+                <label for="mobileNumber">Mobile Number *</label>
+            </div>
+            {% if form.mobile_number.errors %}
+            <div class="text-danger small mt-1">
+            {{ form.mobile_number.errors.0 }}
+            </div>
+            {% endif %}
+        </div>
+        <div class="col-md-6">
+            <div class="form-floating mb-3">
+                {% render_field form.email class="form-control" id="email" placeholder="Email" %}
+                <label for="email">Email ID</label>
+            </div>
+            {% if form.email.errors %}
+            <div class="text-danger small mt-1">
+            {{ form.email.errors.0 }}
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <div class="col-md-6">
+            <div class="row">
+                <div class="col-12">
+                    <div class="form-floating mb-3">
+                        {% render_field form.address class="form-control" placeholder="Address" id="address"   style="height: 100px" %}
+                        <label for="address">Address *</label>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="form-floating mb-3">
+                        {% render_field form.landmark class="form-control" id="landmark" placeholder="Landmark" %}
+                        <label for="landmark">Land Mark</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="row">
+                <div class="col-12" style="background-color: #ffffcc;">
+                    <h6 class="form-label text-center my-4">Plot/Land Area</h6>
+                    <div class="form-group d-flex justify-content-center mb-4">
+                        {% for radio in form.plot_unit %}
+                        <div class="form-check form-check-inline me-3">
+                            {{ radio.tag }}
+                            <label class="form-check-label" for="{{ radio.id_for_label }}">{{ radio.choice_label }}</label>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12" style="background-color: #ffffcc;">
+                    {% render_field form.plot_area class="form-control my-2" placeholder="Type Here" %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <div class="col-md-6">
+            <div class="mb-3">
+                <label for="serviceTypes" class="mb-2">Service Types</label><br>
+                {% render_field form.service_types class="form-select" id="serviceTypes" %}
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-floating mb-3">
+                {% render_field form.project_type class="form-select" id="projectType" %}
+                <label for="projectType">Project Type *</label>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <div class="col-md-6 d-flex align-items-center mb-3">
+            {% render_field form.proposal_required class="form-check-input me-2" id="proposalRequired" %}
+            <label class="form-check-label" for="proposalRequired">Proposal/Quotation Required</label>
+        </div>
+        <div class="col-md-6">
+            <div class="form-floating mb-3">
+                {% render_field form.estimate_amount class="form-control" id="estimate" placeholder="Estimate"  %}
+                <label for="estimate">Estimate Amount (INR)</label>
+            </div>
+        </div>
+    </div>
+
+    <div class="mb-3 p-3" style="background-color: #ffffcc;">
+        <h6 class="form-label">How did you know Axis</h6>
+        <div class="d-flex justify-content-center">
+            {% for radio in form.heard_from %}
+            <div class="form-check form-check-inline me-3">
+                {{ radio.tag }}
+                <label class="form-check-label" for="{{ radio.id_for_label }}">{{ radio.choice_label }}</label>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <div class="col-md-6">
+            <div class="form-floating mb-3">
+                {% render_field form.comments class="form-control" placeholder="Comments" id="comments" style="height: 80px"%}
+                <label for="comments">Comments</label>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="row mb-3">
+                <div class="col-12">
+                    <label for="nextFollowUp">{{form.next_follow_up.label}}</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    {% render_field form.next_follow_up id="nextFollowUp" required="required" %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-check my-5">
+        {% render_field form.confirm_as_business class="form-check-input me-2" id="confirmBusiness" %}
+        <label class="form-check-label" for="confirmBusiness">Confirm as Business</label>
+    </div>
+
+    <div class="row mb-3 {% if not form.instance.confirm_as_business %}d-none{% endif %}" id="extraWorkForm">
+        <div class="col-md-6">
+            <div class="d-flex align-items-end">
+                <label class="form-label me-2 w-25">{{ form.site_visit_on.label }}</label>
+                {% render_field form.site_visit_on id="siteVisitOn" %}
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-floating mb-3">
+                {% render_field form.remarks class="form-control" placeholder="Remarks" id="remarks" style="height:   80px" %}
+                <label for="remarks">Remarks</label>
+            </div>
+        </div>
+    </div>
+
+    <div class="btn-wrapper mt-5 justify-content-center d-flex">
+        <button class="btn btn-primary me-4" type="submit">Save</button>
+        <button class="btn btn-secondary" type="reset">Cancel</button>
+    </div>
+</form>

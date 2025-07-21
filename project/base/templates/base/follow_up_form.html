@@ -1,0 +1,115 @@
+{% load widget_tweaks %}
+{{ form.media }}
+<div class="modal-content" id="FollowUpContainer">
+    <div class="row g-0">
+
+      <!-- Left: Details Section -->
+      <div class="col-md-4 border-end p-4 bg-light">
+        <h5 class="card-title mb-3">Customer Details</h5>
+        <p>
+            <strong>Customer Details:</strong><br>
+            {{ enquiry.customer_name }}<br>
+            {{ enquiry.address }}<br>
+            {{ enquiry.district }}, {{ enquiry.state }}
+        </p>
+        <p>
+            <strong>Service Types:</strong>
+            {% for service in enquiry.service_types.all %}
+            {{ service }},<br>
+            {% endfor %}
+        </p>
+        <p><strong>Estimate Amount:</strong> {{ enquiry.estimate_amount }}</p>
+        <p>
+            <strong>Proposal Required:</strong>
+            {% if enquiry.proposal_required %}
+            Yes
+            {% else %}
+            No
+            {% endif %}
+        </p>
+        <p><strong>Status:</strong> {{ enquiry.status|capfirst }}</p>
+      </div>
+
+      <!-- Right: Form Section -->
+      <div class="col-md-8 p-4">
+        <h5 class="mb-3">Add Follow-up</h5>
+        <form method="post" action="{% url 'add_follow_up' form.instance.id %}">
+          {% csrf_token %}
+          <div class="row mb-3">
+            <div class="col-md-6">
+                <div class="form-floating mb-3">
+                    {% render_field form.comments class="form-control" placeholder="Comments" id="comments" style="height: 80px"%}
+                    <label for="comments">Comments</label>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="row mb-3">
+                    <div class="col-12">
+                        <label for="addNextFollowUp">{{form.next_follow_up.label}}</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        {% render_field form.next_follow_up id="addNextFollowUp" required="required" %}
+                    </div>
+                </div>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <div class="col-md-6">
+                <div class="form-floating mb-3">
+                    {% render_field form.status class="form-select" id="statusFollowUp" %}
+                    <label for="statusFollowUp">Status *</label>
+                </div>
+            </div>
+          </div>
+          <div class="row mb-3 d-none" id="extraWorkForm">
+            <div class="col-md-6">
+                <div class="d-flex align-items-end">
+                    <label class="form-label me-2 w-25">{{ form.site_visit_on.label }}</label>
+                    {% render_field form.site_visit_on id="siteVisitOnFollowUp" %}
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-floating mb-3">
+                    {% render_field form.remarks class="form-control" placeholder="Remarks" id="remarks" style="height:   80px" %}
+                    <label for="remarks">Remarks</label>
+                </div>
+            </div>
+          </div>
+
+          <div class="btn-wrapper mt-5 justify-content-center d-flex">
+            <button class="btn btn-primary me-4" type="submit">Save</button>
+            <button class="btn btn-secondary" id="cancelFollowUp" type="button" data-bs-dismiss="modal">Cancel</button>
+          </div>
+        </form>
+      </div>
+    </div>
+</div>
+<script>
+    $("#statusFollowUp").change(function(){
+        const $extraFields = $("#extraWorkForm");
+        const $siteVisit = $("#siteVisitOnFollowUp");
+        const $comments = $('#comments');
+        const $nextFollowUp = $('#addNextFollowUp');
+
+        if (this.value=="business") {
+            $extraFields.removeClass("d-none");
+            $siteVisit.attr("required", "True");
+
+            $comments.attr("disabled", "True");
+            $nextFollowUp.removeAttr("required");
+            $nextFollowUp.attr("disabled", "True");
+        } else {
+            $extraFields.addClass("d-none");
+            $siteVisit.removeAttr("required");
+
+            $comments.removeAttr("disabled");
+            $nextFollowUp.removeAttr("disabled");
+            $nextFollowUp.attr("required", "True");
+        }
+    });
+
+    $('#addFollowUpModal').modal('show');
+
+</script>

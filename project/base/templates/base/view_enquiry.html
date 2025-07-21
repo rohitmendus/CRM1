@@ -1,0 +1,85 @@
+<div id="viewEnquiryContent">
+    <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Enquiry Details</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    </div>
+    <div class="container">
+        <div class="vertical-table">
+            <div class="row">
+                <div class="col-md-3 label">Customer Details</div>
+                <div class="col-md-9">
+                    {{ enquiry.customer_name }}<br>
+                    {{ enquiry.address }}<br>
+                    {{ enquiry.district }}, {{ enquiry.state }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3 label">Mobile & Email</div>
+                <div class="col-md-9">
+                    {{ enquiry.mobile_number }}<br>
+                    {{ enquiry.email }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3 label">Landmark</div>
+                <div class="col-md-9">
+                    {% if enquiry.landmark %}
+                    {{ enquiry.landmark }}
+                    {% endif %}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3 label">Service Types</div>
+                <div class="col-md-9">
+                    {% for service in enquiry.service_types.all %}
+                    {{ service }},<br>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3 label">Project Type</div>
+                <div class="col-md-9">{{ enquiry.project_type }}</div>
+            </div>
+            <div class="row">
+                <div class="col-md-3 label">Status</div>
+                <div class="col-md-9">{{ enquiry.get_status_display }}</div>
+            </div>
+            <div class="row">
+                <div class="col-md-3 label">Prop/Quot Required</div>
+                <div class="col-md-9">
+                    {% if enquiry.proposal_required %}
+                    Yes
+                    {% else %}
+                    No
+                    {% endif %}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3 label">Estimate Amount</div>
+                <div class="col-md-9">{{ enquiry.estimate_amount }}</div>
+            </div>
+            <div class="row">
+                <div class="col-md-3 label">Plot/Land Area</div>
+                <div class="col-md-9">{{ enquiry.plot_area }} {{ enquiry.plot_unit }}</div>
+            </div>
+            <div class="row">
+                <div class="col-md-3 label">Comments</div>
+                <div class="col-md-9">{{ enquiry.comments }}</div>
+            </div>
+            <div class="row">
+                <div class="col-md-3 label">Next Follow Up</div>
+                <div class="col-md-9">
+                    {% if enquiry.next_follow_up %}
+                    {{ enquiry.next_follow_up }}
+                    {% else %}
+                    NA
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+	$("#viewModalEnquiry").modal('show');
+</script>

@@ -1,0 +1,82 @@
+{% extends 'accounts/main.html' %} 
+
+{% block title %}Completed Work List{% endblock %} 
+
+{% block content %}
+
+<div class="container my-4">
+  <h3 class="mb-5">Completed Work List</h3>
+
+  <div class="table-responsive">
+    <table class="table table-bordered align-middle">
+      <thead class="table-light">
+        <tr>
+          <th scope="col">Sl. No</th>
+          <th scope="col">Customer Details</th>
+          <th scope="col">Service Types</th>
+          <th scope="col">Project Type</th>
+          <th scope="col">Status</th>
+          <th scope="col">Prop/Quot Required</th>
+          <th scope="col">Estimate Amount</th>
+          <th scope="col">Plot/Land Area</th>
+          <th scope="col">Site Visit On</th>
+          <th scope="col">Actions</th>
+        </tr>
+      </thead>
+      <tbody class="text-center">
+        {% for work in works %}
+        <tr>
+          <td>{{ forloop.counter }}</td>
+          <td>{{ work.customer.name }}<br>
+            {{ work.customer.address }}<br>
+            {{ work.customer.district }}, {{ work.customer.state }}
+          </td>
+          <td>
+            {% for service in work.service_types.all %}
+            {{ service }},<br>
+            {% endfor %}
+          </td>
+          <td>{{ work.project_type }}</td>
+          <td>{{ work.get_status_display }}</td>
+          <td>
+            {% if work.proposal_required %}
+            Yes
+            {% else %}
+            No
+            {% endif %}
+          </td>
+          <td>{{ work.estimate_amount }}</td>
+          <td>{{ work.plot_area }} {{ work.plot_unit }}</td>
+          <td>{{ work.site_visit_on }}</td>
+          <td>
+            <div class="dropdown">
+              <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Actions
+              </button>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item view-completed-work" hx-get="{% url 'view_completed_work' work.id %}" hx-trigger="click" hx-swap="outerHTML" hx-target="#viewC-WorkContent" style="cursor: pointer;">👁️ View</a></li>
+                <li><a class="dropdown-item payment-completed-work" href="{% url 'work_payment' work.id %}">💸 Payment</a></li>
+                
+              </ul>
+            </div>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- View Modal -->
+<div class="modal fade" id="viewModalC-Work" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div id="viewC-WorkContent">
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,99 @@
+<div id="viewC-WorkContent">
+    <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Completed Work Details</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    </div>
+    <div class="container">
+        <div class="vertical-table">
+            <div class="row">
+                <div class="col-md-3 label">Customer Details</div>
+                <div class="col-md-9">
+                    {{ work.customer.name }}<br>
+                    {{ work.customer.address }}<br>
+                    {{ work.customer.district }}, {{ work.customer.state }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3 label">Mobile & Email</div>
+                <div class="col-md-9">
+                    {{ work.customer.mobile_number }}<br>
+                    {{ work.customer.email }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3 label">Landmark</div>
+                <div class="col-md-9">
+                    {% if work.landmark %}
+                    {{ work.landmark }}
+                    {% endif %}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3 label">Service Types</div>
+                <div class="col-md-9">
+                    {% for service in work.service_types.all %}
+                    {{ service }},<br>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3 label">Project Type</div>
+                <div class="col-md-9">{{ work.project_type }}</div>
+            </div>
+            <div class="row">
+                <div class="col-md-3 label">Status</div>
+                <div class="col-md-9">{{ work.get_status_display }}</div>
+            </div>
+            <div class="row">
+                <div class="col-md-3 label">Prop/Quot Required</div>
+                <div class="col-md-9">
+                    {% if work.proposal_required %}
+                    Yes
+                    {% else %}
+                    No
+                    {% endif %}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3 label">Estimate Amount</div>
+                <div class="col-md-9">{{ work.estimate_amount }}</div>
+            </div>
+            <div class="row">
+                <div class="col-md-3 label">Amount Left</div>
+                <div class="col-md-9">{{ work.get_amount_left }}</div>
+            </div>
+            <div class="row">
+                <div class="col-md-3 label">Plot/Land Area</div>
+                <div class="col-md-9">{{ work.plot_area }} {{ work.plot_unit }}</div>
+            </div>
+            <div class="row">
+                <div class="col-md-3 label">Site Engineer</div>
+                <div class="col-md-9">
+                    {% if work.site_engineer %}
+                    {{ work.site_engineer }}
+                    {% else %}
+                    Not Assigned
+                    {% endif %}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3 label">Remarks</div>
+                <div class="col-md-9">{{ work.remarks }}</div>
+            </div>
+            <div class="row">
+                <div class="col-md-3 label">Site Visit On</div>
+                <div class="col-md-9">
+                    {% if work.site_visit_on %}
+                    {{ work.site_visit_on }}
+                    {% else %}
+                    NA
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+	$("#viewModalC-Work").modal('show');
+</script>

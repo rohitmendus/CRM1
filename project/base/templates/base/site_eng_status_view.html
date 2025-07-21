@@ -1,0 +1,33 @@
+{% extends 'accounts/main.html' %} 
+
+{% load widget_tweaks %} 
+
+{% block title%}Site Engineer Status{% endblock %} 
+
+{% block content %}
+<div class="container my-4">
+  <h3 class="my-5">Site Engineer Status</h3>
+  <div class="table-responsive flex-grow-1 overflow-auto">
+    <table class="table table-bordered align-middle">
+      <thead class="table-light">
+        <tr>
+          <th scope="col">Sl. No</th>
+          <th scope="col">Name</th>
+          <th scope="col">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for eng in site_engineers %}
+        <tr>
+          <td>{{ forloop.counter }}</td>
+          <td>{{ eng }}</td>
+          <td class="text-center">
+            <a class="btn btn-primary" href="{% url 'site_eng_status_view' eng.id %}"> View </a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

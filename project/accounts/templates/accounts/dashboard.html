@@ -1,0 +1,423 @@
+{% extends 'accounts/main.html' %} 
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<div class="container my-4">
+    <div class="row mb-3">
+        <div class="col-md-3">
+            <div class="card dashboard-card">
+                <div class="card-body" style="height: 9rem;">
+                    <h5 class="card-title text-center">Total Customers</h5>
+                    <h1 class="card-text text-center" id="no_of_customers">{{ card_data.no_of_customers }}</h1>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card dashboard-card">
+                <div class="card-body" style="height: 9rem;">
+                    <h5 class="card-title text-center">Enquiry</h5>
+                    <h1 class="card-text text-center" id="no_of_enquiries">{{ card_data.no_of_closed_enq }}/{{ card_data.no_of_unclosed_enq }}</h1>
+                    <h6 class="card-subtitle my-1 text-body-secondary text-end">Closed/Enquiry</h6>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card dashboard-card">
+                <div class="card-body" style="height: 9rem;">
+                    <h5 class="card-title text-center">Total Work</h5>
+                    <h1 class="card-text text-center" id="no_of_works">{{ card_data.no_of_cmp_work }}/{{ card_data.no_of_ong_work }}</h1>
+                    <h6 class="card-subtitle my-1 text-body-secondary text-end">Completed/Ongoing</h6>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card dashboard-card">
+                <div class="card-body" style="height: 9rem;">
+                    <h5 class="card-title text-center">Upcoming Work</h5>
+                    <h1 class="card-text text-center" id="no_of_upc_works">{{ card_data.no_of_upc_work }}</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body" style="height: 23rem;">
+                    <h4 class="card-title text-center mb-4">Monthly Enquiry Status</h4>
+                    <canvas id="monthlyEnquiries"></canvas>
+                </div>
+            </div>            
+        </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body d-flex flex-column" style="height: 23rem;">
+                    <h4 class="card-title text-center mb-4">Site Engineer Wise Status</h4>
+                    <div class="table-responsive flex-grow-1 overflow-auto">
+                        <table class="table table-bordered align-middle">
+                        <thead class="table-light">
+                            <tr>
+                            <th scope="col">Sl. No</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for eng in site_engineers %}
+                            <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ eng.name }}</td>
+                            <td class="text-center">
+                                <a class="btn btn-primary" href="{% url 'site_eng_status_view' eng.id %}">
+                                    View
+                                </a>
+                            </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                        </table>
+                    </div>
+                    <div class="mt-3 text-center">
+                        <a class="btn btn-outline-primary" href="{% url 'site_eng_status' %}">
+                            View All
+                        </a>
+                    </div>
+                </div>
+            </div>            
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body" style="height: 17rem;">
+                    <h4 class="card-title text-center mb-4">Projects</h4>
+                    <div class="d-flex m-3 justify-content-center">
+                        <canvas id="pvtProject" width="175" height="175" style="width: 175px; height: 175px;"></canvas>
+                        <canvas id="govtProject" width="175" height="175" style="width: 175px; height: 175px;"></canvas>
+                        <canvas id="totalProject" width="175" height="175" style="width: 175px; height: 175px;"></canvas>
+                    </div>
+                </div>
+            </div>            
+        </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body d-flex flex-column" style="height: 17rem;">
+                    <h4 class="card-title text-center mb-4">Payment Due List</h4>
+                    <div class="table-responsive flex-grow-1 overflow-auto">
+                        <table class="table table-bordered align-middle">
+                        <thead class="table-light">
+                            <tr>
+                            <th scope="col">Sl. No</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Total</th>
+                            <th scope="col">Balance</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for pay in payment_due_list %}
+                            <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ pay.customer }}</td>
+                            <td>{{ pay.estimate_amount }}</td>
+                            <td>{{ pay.amount_left }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                        </table>
+                    </div>
+                    <div class="mt-3 text-center">
+                        <a class="btn btn-outline-primary" href="{% url 'payment_due_list' %}">
+                            View All
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body" style="height: 24rem;">
+                    <h4 class="card-title text-center mb-4">Payment Mode</h4>
+                    <div class="d-flex m-3 justify-content-center">
+                        <canvas id="paymentStats"></canvas>
+                    </div>
+                    {% if request.user.role == "manager" %}
+                    <h6 class="card-subtitle my-3 text-body-secondary text-center">Click a payment mode to see monthly wise payment</h6>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% if request.user.role == "manager" %}
+        <div class="col-md-6">
+            <div class="card d-none" id="int-graph-container">
+                <div class="card-body" style="height: 24rem;">
+                    <h4 class="card-title text-center mb-4">Monthly Payments</h4>
+                    <div class="d-flex m-3 justify-content-center">
+                        <canvas id="paymentMonthlyStats"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<!-- Chart.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js" integrity="sha512-ZwR1/gSZM3ai6vCdI+LVF1zSq/5HznD3ZSTk7kajkaj4D292NLuduDCO1c/NT8Id+jE58KYLKT7hXnbtryGmMg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<!-- Chart.js Datalabels Plugin -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-datalabels/2.2.0/chartjs-plugin-datalabels.min.js" integrity="sha512-JPcRR8yFa8mmCsfrw4TNte1ZvF1e3+1SdGMslZvmrzDYxS69J7J49vkFL8u6u8PlPJK+H3voElBtUCzaXj+6ig==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+<script>
+    const months_labels = {{ graph_1.months|safe }};
+    const enquiries_data = {{ graph_1.no_of_enquiries|safe }};
+
+    // Line Chart 
+    const ctx1 = document.getElementById("monthlyEnquiries").getContext("2d");
+    window.chart1 = new Chart(ctx1, {
+        type: 'line',
+        data: {
+            labels: months_labels,
+            datasets: [{
+                label: 'Enquiries',
+                data: enquiries_data,
+                fill: true,
+                tension: 0.5,
+            }]
+        },
+        options: {
+            scales: {
+                x: { title: { text: "Month", display: true } },
+                y: { beginAtZero: true, title: { text: "Enquiries", display: true } }
+            }
+        }
+    });
+
+    // Doughnut Chart Generator 
+    const createProjectChart = (id, value, total, label) => {
+        const chart = new Chart(document.getElementById(id), {
+            type: 'doughnut',
+            data: {
+                datasets: [{
+                    data: [value, total - value],
+                    backgroundColor: ['#3b82f6', '#e5e7eb'],
+                    borderWidth: 0,
+                }]
+            },
+            options: {
+                responsive: false,
+                maintainAspectRatio: false,
+                radius: 50,
+                cutout: '60%',
+                plugins: {
+                    datalabels: {
+                        display: (ctx) => ctx.dataIndex === 0,
+                        color: '#000',
+                        font: { weight: 'bold', size: 14 },
+                        formatter: (value, ctx) => ctx.chart.data.datasets[0].data[0],
+                        anchor: 'center',
+                        align: 'center',
+                    },
+                    title: {
+                        display: true,
+                        text: label,
+                        font: { size: 14 }
+                    },
+                }
+            },
+            plugins: [ChartDataLabels]
+        });
+
+        // Save reference to window
+        window[`chart_${id}`] = chart;
+    };
+
+
+    createProjectChart("pvtProject", {{ graph_2.no_of_pvt_work|safe }}, {{ graph_2.no_of_tot_work|safe }}, "Pvt. Project");
+    createProjectChart("govtProject", {{ graph_2.no_of_gov_work|safe }}, {{ graph_2.no_of_tot_work|safe }}, "Govt. Project");
+    createProjectChart("totalProject", {{ graph_2.no_of_tot_work|safe }}, {{ graph_2.no_of_tot_work|safe }}, "Total");
+
+
+
+
+
+    {% if request.user.role == "manager" %}
+    let chart3 = null;
+    function loadMonthlyGraph(mode) {
+        $.ajax({
+            url: "{% url 'int_graph' %}",  
+            type: "GET",
+            data: { mode: mode },  
+            success: function (response) {
+                const ctx3 = document.getElementById("paymentMonthlyStats").getContext("2d");
+                if (chart3) {
+                    chart3.destroy(); 
+                }
+                chart3 = new Chart(ctx3, {
+                    type: 'bar',
+                    data: {
+                        labels: response.labels,
+                        datasets: [{
+                            label: mode,
+                            data: response.data,
+                            backgroundColor: [
+                                'rgba(255, 99, 132, 0.2)',
+                                'rgba(255, 159, 64, 0.2)',
+                                'rgba(255, 205, 86, 0.2)',
+                                'rgba(75, 192, 192, 0.2)',
+                                'rgba(54, 162, 235, 0.2)',
+                                'rgba(153, 102, 255, 0.2)',
+                                'rgba(201, 203, 207, 0.2)'
+                                ],
+                                borderColor: [
+                                'rgb(255, 99, 132)',
+                                'rgb(255, 159, 64)',
+                                'rgb(255, 205, 86)',
+                                'rgb(75, 192, 192)',
+                                'rgb(54, 162, 235)',
+                                'rgb(153, 102, 255)',
+                                'rgb(201, 203, 207)'
+                                ],
+                                borderWidth: 1,
+
+                        }],
+                    },
+                    options: {
+                        scales: {
+                            x: { title: { text: "Months", display: true } },
+                            y: { beginAtZero: true, title: { text: "Amount", display: true } }
+                        },
+                    }
+                });
+
+                $("#int-graph-container").removeClass("d-none");
+            },
+            error: function (xhr, status, error) {
+                console.error("Error loading monthly graph:", error);
+            }
+        });
+    };
+    {% endif %}
+
+
+
+    // Payment Statistics Bar Graph
+    const modes = {{ graph_3.payment_modes|safe }};
+    const no_of_payments = {{ graph_3.no_of_payments|safe }};
+    const ctx2 = document.getElementById("paymentStats").getContext("2d");
+    window.chart2 = new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: modes,
+            datasets: [{
+                label: 'Amount',
+                data: no_of_payments,
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(255, 159, 64, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    ],
+                    borderColor: [
+                    'rgb(255, 99, 132)',
+                    'rgb(255, 159, 64)',
+                    'rgb(75, 192, 192)',
+                    'rgb(54, 162, 235)',
+                    'rgb(153, 102, 255)',
+                    ],
+                    borderWidth: 1,
+
+            }],
+        },
+        options: {
+            scales: {
+                x: { title: { text: "Mode", display: true } },
+                y: { beginAtZero: true, title: { text: "Amount", display: true } }
+            },
+        }
+    });
+
+    {% if request.user.role == 'manager' %}
+    window.chart2.options = {
+        onHover: (event, chartElement) => {
+            if (chartElement.length > 0) {
+                event.native.target.style.cursor = 'pointer';
+            } else {
+                event.native.target.style.cursor = 'default';
+            }
+        },
+        onClick: (event, elements) => {
+            if (elements.length > 0) {
+                const chart = elements[0];
+                const mode = window.chart2.data.labels[chart.index]; 
+                loadMonthlyGraph(mode); 
+            }
+        },
+        scales: {
+            x: { title: { text: "Mode", display: true } },
+            y: { beginAtZero: true, title: { text: "Payments", display: true } }
+        }
+    };
+    {% endif %}
+
+
+    function connectSSE() {
+        // Server-Sent Events Setup
+        const evtSource = new EventSource("/sse/dasboard/");
+        evtSource.addEventListener("update", function (event) {
+            const data = JSON.parse(event.data);
+            console.log(data);
+
+            // 🔄 Update card values
+            document.getElementById("no_of_customers").innerText = data.card_data.no_of_customers;
+            document.getElementById("no_of_enquiries").innerText = `${data.card_data.no_of_closed_enq}/${data.card_data.no_of_unclosed_enq}`;
+            document.getElementById("no_of_works").innerText = `${data.card_data.no_of_cmp_work}/${data.card_data.no_of_ong_work}`;
+            document.getElementById("no_of_upc_works").innerText = data.card_data.no_of_upc_work;
+
+            // 🔄 Update Line Chart (Monthly Enquiries)
+            if (window.chart1) {
+                window.chart1.data.labels = data.graph_1.months;
+                window.chart1.data.datasets[0].data = data.graph_1.no_of_enquiries;
+                window.chart1.update();
+            }
+
+            // 🔄 Update Doughnut Charts
+            if (window.chart_pvtProject) {
+                window.chart_pvtProject.data.datasets[0].data = [data.graph_2.no_of_pvt_work, data.graph_2.no_of_tot_work - data.graph_2.no_of_pvt_work];
+                window.chart_pvtProject.update();
+            }
+            if (window.chart_govtProject) {
+                window.chart_govtProject.data.datasets[0].data = [data.graph_2.no_of_gov_work, data.graph_2.no_of_tot_work - data.graph_2.no_of_gov_work];
+                window.chart_govtProject.update();
+            }
+            if (window.chart_totalProject) {
+                window.chart_totalProject.data.datasets[0].data = [data.graph_2.no_of_tot_work, 0];
+                window.chart_totalProject.update();
+            }
+
+            // Update Bar Chart(Payment Statistics)
+            if (window.chart2) {
+                window.chart2.data.labels = data.graph_3.payment_modes;
+                window.chart2.data.datasets[0].data = data.graph_3.no_of_payments;
+                window.chart2.update();
+            }
+
+            $("#int-graph-container").addClass("d-none");
+        });
+
+        evtSource.onerror = function (err) {
+            console.error("SSE connection error. Attempting to reconnect...", err);
+            console.log("Error");
+            source.close();
+            setTimeout(connectSSE, 5000);
+        };
+    }
+
+    document.addEventListener("DOMContentLoaded", connectSSE);
+</script>
+
+{% endblock scripts %}
