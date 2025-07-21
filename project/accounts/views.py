@@ -26,7 +26,6 @@ import json
 import redis
 
 
-
 def get_dashboard_data():
     # Getting all the card data
     no_of_customers=Customer.objects.all().count()

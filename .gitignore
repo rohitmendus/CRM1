@@ -1,3 +1,4 @@
 .env
 venv/
 project/staticfiles/
+requirements.txt
