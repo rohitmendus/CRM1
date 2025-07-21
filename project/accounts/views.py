@@ -26,19 +26,6 @@ import json
 import redis
 
 
-def is_json_serializable(obj):
-    """
-    Checks if an object is JSON serializable.
-    """
-    try:
-        json.dumps(obj)
-        return True
-    except (TypeError, OverflowError):
-        # TypeError is raised for non-serializable types.
-        # OverflowError is raised for numbers too large for JSON.
-        return False
-
-
 
 def get_dashboard_data():
     # Getting all the card data
