@@ -395,7 +395,8 @@ class WorkPaymentView(RoleRequiredMixin, View):
 
     def get(self, request, pk):
         work=self.model.objects.get(id=pk)
-        context={'work': work}
+        payments = Payment.objects.filter(work=work)
+        context={'work': work, 'payments': payments}
         return render(request, self.template, context)
     
 

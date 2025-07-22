@@ -4,30 +4,17 @@
 
 {% block content %}
 <div class="container my-4 justify-content-center">
-    <h3 class="mb-4">Payments</h3>
-    <div class="container">
+    <h3 class="mb-4">Payment Details</h3>
+    <div class="container mb-5">
         <div class="vertical-table">
             <div class="row">
                 <div class="col-md-3 label">Customer Details</div>
                 <div class="col-md-9">
                     {{ work.customer.name }}<br>
                     {{ work.customer.address }}<br>
-                    {{ work.customer.district }}, {{ work.customer.state }}
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-3 label">Mobile & Email</div>
-                <div class="col-md-9">
+                    {{ work.customer.district }}, {{ work.customer.state }}<br>
                     {{ work.customer.mobile_number }}<br>
                     {{ work.customer.email }}
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-3 label">Landmark</div>
-                <div class="col-md-9">
-                    {% if work.landmark %}
-                    {{ work.landmark }}
-                    {% endif %}
                 </div>
             </div>
             <div class="row">
@@ -43,8 +30,8 @@
                 <div class="col-md-9">{{ work.project_type }}</div>
             </div>
             <div class="row">
-                <div class="col-md-3 label">Status</div>
-                <div class="col-md-9">{{ work.get_status_display }}</div>
+                <div class="col-md-3 label">Plot/Land Area</div>
+                <div class="col-md-9">{{ work.plot_area }} {{ work.plot_unit }}</div>
             </div>
             <div class="row">
                 <div class="col-md-3 label">Prop/Quot Required</div>
@@ -61,8 +48,8 @@
                 <div class="col-md-9">{{ work.estimate_amount }}</div>
             </div>
             <div class="row">
-                <div class="col-md-3 label">Plot/Land Area</div>
-                <div class="col-md-9">{{ work.plot_area }} {{ work.plot_unit }}</div>
+                <div class="col-md-3 label">Amount Left</div>
+                <div class="col-md-9">{{ work.get_amount_left }}</div>
             </div>
             <div class="row">
                 <div class="col-md-3 label">Site Engineer</div>
@@ -74,21 +61,29 @@
                     {% endif %}
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md-3 label">Remarks</div>
-                <div class="col-md-9">{{ work.remarks }}</div>
-            </div>
-            <div class="row">
-                <div class="col-md-3 label">Site Visit On</div>
-                <div class="col-md-9">
-                    {% if work.site_visit_on %}
-                    {{ work.site_visit_on }}
-                    {% else %}
-                    NA
-                    {% endif %}
-                </div>
-            </div>
         </div>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-bordered align-middle">
+        <thead class="table-light">
+            <tr>
+            <th scope="col">Sl. No</th>
+            <th scope="col">Amount</th>
+            <th scope="col">Mode</th>
+            <th scope="col">Paid At</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for pay in payments %}
+            <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ pay.amount }}</td>
+            <td>{{ pay.get_mode_display }}</td>
+            <td>{{ pay.payment_at }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+        </table>
     </div>
 </div>
 {% endblock %}
