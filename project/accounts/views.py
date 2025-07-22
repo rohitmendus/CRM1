@@ -126,6 +126,66 @@ def get_dashboard_data():
     return context
 
 
+def get_dashboard_data_eng(eng):
+    # Getting all the card data
+    no_of_cmp_work = Work.objects.filter(status="completed", site_engineer=eng).count()
+    no_of_ong_work = Work.objects.filter(status__in=["assigned", "in-progress"], site_engineer=eng).count()
+    card_data={'no_of_cmp_work': no_of_cmp_work, 'no_of_ong_work': no_of_ong_work}
+
+
+    # Getting data from monthly work area graph
+    end = datetime.now()
+    start = (end - relativedelta(months=6)).replace(day=1, hour=0, minute=0, second=0, microsecond=0)
+    months = [] # List having all the past 6 months
+    temp = start
+    while temp <= end:
+        months.append(temp.strftime("%B %y"))
+        if temp.month == 12:
+            temp = temp.replace(year=temp.year + 1, month=1)
+        else:
+            temp = temp.replace(month=temp.month + 1)
+        
+    work_qs = (
+        Work.objects
+        .filter(created_at__gte=start, created_at__lte=end, site_engineer=eng)
+        .annotate(month=TruncMonth('created_at'))
+        .values('month')
+        .annotate(count=Count('id'))
+    ) 
+
+    work_counts = {
+        entry['month'].strftime("%B %y"): entry['count']
+        for entry in work_qs
+    }# Dictionary showing respective months and their work counts
+
+    # Prepare final data list with 0 for months with no data
+    no_of_works = [work_counts.get(month, 0) for month in months]
+    graph_1 = {'months': months, 'no_of_works': no_of_works}
+
+
+
+    # Work Status Bar Grpah
+    work_status=["Assigned", "In Progress", "Completed"]
+    work_choices = Work._meta.get_field('status').choices
+    works = Work.objects.filter(site_engineer=eng).values('status').annotate(count=Count('id'))
+    status_label_map = dict(work_choices)
+    works = [
+        {'status': status_label_map.get(row['status'], row['status']), 'count': row['count']}
+        for row in works
+    ]
+    no_of_work_stats = {
+        work['status']: int(work['count'])
+        for work in works
+    }
+    no_of_work_stats = [no_of_work_stats.get(mode, 0) for mode in work_status]
+    graph_2={"work_status": work_status, 'no_of_work_stats': no_of_work_stats}
+
+
+    context={'card_data': card_data, 'graph_1': graph_1, 'graph_2': graph_2}
+    return context
+
+
+
 
 def get_int_graph(request):
     label_to_code = {label: code for code, label in Payment.PAYMENT_CHOICES}
@@ -164,7 +224,7 @@ def get_int_graph(request):
 
 
 
-def event_stream():
+def event_stream(request):
     r = redis.Redis(host="localhost", port=6379, db=0, decode_responses=True)
     pubsub = r.pubsub()
     pubsub.subscribe("dashboard_updates")
@@ -172,7 +232,10 @@ def event_stream():
     try:
         for message in pubsub.listen():
             if message['type'] == 'message':
-                data = get_dashboard_data()
+                if request.user.role == "engineer":
+                    data=get_dashboard_data_eng(request.user)
+                else:
+                    data = get_dashboard_data()
                 yield f"event: update\ndata: {json.dumps(data)}\n\n"
                 time.sleep(0.5)
     except GeneratorExit:
@@ -183,7 +246,7 @@ def event_stream():
 
 
 def sse_dashboard(request):
-    response = StreamingHttpResponse(event_stream(), content_type='text/event-stream')
+    response = StreamingHttpResponse(event_stream(request), content_type='text/event-stream')
     response['Cache-Control'] = 'no-cache'
     return response
 
@@ -222,12 +285,16 @@ def send_password_reset_email(user, request):
 
 
 class DashboardView(RoleRequiredMixin, View):
-    template="accounts/dashboard.html"
+    template1="accounts/dashboard.html"
+    template2="accounts/dashboard_eng.html"
     required_roles = ['admin', 'assistant', 'engineer', 'manager']
 
     def get(self, request):
+        if request.user.role == "engineer":
+            context=get_dashboard_data_eng(request.user)
+            return render(request, self.template2, context)
         context=get_dashboard_data()
-        return render(request, self.template, context)
+        return render(request, self.template1, context)
     
 
 class UserManagementView(RoleRequiredMixin, View):

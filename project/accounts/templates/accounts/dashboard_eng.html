@@ -1,0 +1,147 @@
+{% extends 'accounts/main.html' %} 
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<div class="container my-4">
+    <div class="row mb-3">
+        <div class="col-md-6">
+            <div class="card dashboard-card">
+                <div class="card-body" style="height: 9rem;">
+                    <h5 class="card-title text-center">Completed Work</h5>
+                    <h1 class="card-text text-center" id="no_of_cmp_works">{{ card_data.no_of_cmp_work }}</h1>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card dashboard-card">
+                <div class="card-body" style="height: 9rem;">
+                    <h5 class="card-title text-center">Ongoing Work</h5>
+                    <h1 class="card-text text-center" id="no_of_ong_works">{{ card_data.no_of_ong_work }}</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body" style="height: 23rem;">
+                    <h4 class="card-title text-center mb-4">Monthly Work Status</h4>
+                    <canvas id="monthlyWorks"></canvas>
+                </div>
+            </div>            
+        </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body" style="height: 23rem;">
+                    <h4 class="card-title text-center mb-4">Work Status</h4>
+                    <canvas id="workStatus"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<!-- Chart.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js" integrity="sha512-ZwR1/gSZM3ai6vCdI+LVF1zSq/5HznD3ZSTk7kajkaj4D292NLuduDCO1c/NT8Id+jE58KYLKT7hXnbtryGmMg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<script>
+    const months_labels = {{ graph_1.months|safe }};
+    const works_data = {{ graph_1.no_of_works|safe }};
+
+    // Line Chart 
+    const ctx1 = document.getElementById("monthlyWorks").getContext("2d");
+    window.chart1 = new Chart(ctx1, {
+        type: 'line',
+        data: {
+            labels: months_labels,
+            datasets: [{
+                label: 'Works',
+                data: works_data,
+                fill: true,
+                tension: 0.5,
+            }]
+        },
+        options: {
+            scales: {
+                x: { title: { text: "Month", display: true } },
+                y: { beginAtZero: true, title: { text: "Works", display: true } }
+            }
+        }
+    });
+
+
+
+    const status = {{ graph_2.work_status|safe }};
+    const no_of_work_stats = {{ graph_2.no_of_work_stats|safe }};
+    const ctx2 = document.getElementById("workStatus").getContext("2d");
+    window.chart2 = new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: status,
+            datasets: [{
+                label: 'Work',
+                data: no_of_work_stats,
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(255, 159, 64, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    ],
+                    borderColor: [
+                    'rgb(255, 99, 132)',
+                    'rgb(255, 159, 64)',
+                    'rgb(75, 192, 192)',
+                    ],
+                    borderWidth: 1,
+
+            }],
+        },
+        options: {
+            scales: {
+                x: { title: { text: "Status", display: true } },
+                y: { beginAtZero: true, title: { text: "Work", display: true } }
+            },
+        }
+    });
+
+
+
+    function connectSSE() {
+        // Server-Sent Events Setup
+        const evtSource = new EventSource("/sse/dasboard/");
+        evtSource.addEventListener("update", function (event) {
+            const data = JSON.parse(event.data);
+            console.log(data);
+
+            // 🔄 Update card values
+            document.getElementById("no_of_cmp_works").innerText = data.card_data.no_of_cmp_work;
+            document.getElementById("no_of_ong_works").innerText = data.card_data.no_of_ong_work;
+
+            // 🔄 Update Line Chart (Monthly Works)
+            if (window.chart1) {
+                window.chart1.data.labels = data.graph_1.months;
+                window.chart1.data.datasets[0].data = data.graph_1.no_of_works;
+                window.chart1.update();
+            }
+            // Update Bar Chart(Work Status)
+            if (window.chart2) {
+                window.chart2.data.labels = data.graph_2.work_status;
+                window.chart2.data.datasets[0].data = data.graph_2.no_of_work_stats;
+                window.chart2.update();
+            }
+
+        });
+
+        evtSource.onerror = function (err) {
+            console.error("SSE connection error. Attempting to reconnect...", err);
+            console.log("Error");
+            source.close();
+            setTimeout(connectSSE, 5000);
+        };
+    }
+
+    document.addEventListener("DOMContentLoaded", connectSSE);
+</script>
+{% endblock scripts %}
