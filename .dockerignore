@@ -1,0 +1,8 @@
+.gitignore
+.gitattributes
+.git
+.env
+venv/
+migrations/
+__pycache__/
+Dockerfile
