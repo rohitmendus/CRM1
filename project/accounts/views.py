@@ -225,7 +225,7 @@ def get_int_graph(request):
 
 
 def event_stream(request):
-    r = redis.Redis(host="localhost", port=6379, db=0, decode_responses=True)
+    r = redis.Redis(host="redis", port=6379, db=0, decode_responses=True)
     pubsub = r.pubsub()
     pubsub.subscribe("dashboard_updates")
 

@@ -87,7 +87,7 @@ DATABASES = {
         'NAME': config('DB_NAME'),
         'USER': config('DB_USER'),
         'PASSWORD': config('DB_PASSWORD'),
-        'HOST': 'localhost',
+        'HOST': 'postgres',
         'PORT': '5432',
     }
 }
@@ -126,7 +126,7 @@ LOGOUT_REDIRECT_URL = '/accounts/login'
 CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": "redis://127.0.0.1:6379/1",  # 1 = DB number
+        "LOCATION": "redis://redis:6379/1",  # 1 = DB number
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
         }

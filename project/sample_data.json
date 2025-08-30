@@ -1,0 +1,714 @@
+[
+{
+  "model": "base.project",
+  "pk": 1,
+  "fields": {
+    "project_type": "Private Project"
+  }
+},
+{
+  "model": "base.project",
+  "pk": 2,
+  "fields": {
+    "project_type": "Government Project"
+  }
+},
+{
+  "model": "base.service",
+  "pk": 2,
+  "fields": {
+    "service_type": "Soil Investigation"
+  }
+},
+{
+  "model": "base.service",
+  "pk": 4,
+  "fields": {
+    "service_type": "Boundary Fixing"
+  }
+},
+{
+  "model": "base.service",
+  "pk": 5,
+  "fields": {
+    "service_type": "Topological Survey"
+  }
+},
+{
+  "model": "base.service",
+  "pk": 6,
+  "fields": {
+    "service_type": "Subdivision Survey"
+  }
+},
+{
+  "model": "base.service",
+  "pk": 7,
+  "fields": {
+    "service_type": "Vastu Consultancy"
+  }
+},
+{
+  "model": "base.enquiry",
+  "pk": 1,
+  "fields": {
+    "customer_name": "Harsha Mehta",
+    "mobile_number": "+918888324123",
+    "email": "paucebouruje-3284@yopmail.com",
+    "address": "Villa No: 34, Shobha Villas, Church Street",
+    "landmark": null,
+    "state": "Bihar",
+    "district": "Purbi Champaran",
+    "plot_area": "10.00",
+    "plot_unit": "acres",
+    "project_type": 2,
+    "estimate_amount": "500000.00",
+    "proposal_required": true,
+    "status": "business",
+    "heard_from": "reference",
+    "comments": "",
+    "next_follow_up": null,
+    "confirm_as_business": true,
+    "created_at": "2025-03-08T06:53:17.292Z",
+    "service_types": [
+      2,
+      4,
+      6
+    ]
+  }
+},
+{
+  "model": "base.enquiry",
+  "pk": 2,
+  "fields": {
+    "customer_name": "Rithik Chopra",
+    "mobile_number": "+916235023093",
+    "email": "yarlgo2024@gmail.com",
+    "address": "Block D, \r\nGandhinagar, \r\nKamanahalli",
+    "landmark": null,
+    "state": "Goa",
+    "district": "South Goa",
+    "plot_area": "45.00",
+    "plot_unit": "cent",
+    "project_type": 2,
+    "estimate_amount": "200000.00",
+    "proposal_required": true,
+    "status": "enquired",
+    "heard_from": "advertisement",
+    "comments": "Looking forward",
+    "next_follow_up": "2025-07-30",
+    "confirm_as_business": false,
+    "created_at": "2025-04-08T07:00:49.898Z",
+    "service_types": [
+      5
+    ]
+  }
+},
+{
+  "model": "base.enquiry",
+  "pk": 3,
+  "fields": {
+    "customer_name": "Mansoor Khan",
+    "mobile_number": "+919457894635",
+    "email": "paucebouruje-3284@yopmail.com",
+    "address": "2/3, Sharma Indl Sheds, Saki Vihar Road, Opp. Santogen, Saki Naka",
+    "landmark": null,
+    "state": "Chandigarh",
+    "district": "Chandigarh",
+    "plot_area": "5.00",
+    "plot_unit": "acres",
+    "project_type": 1,
+    "estimate_amount": "600000.00",
+    "proposal_required": false,
+    "status": "dropped",
+    "heard_from": "advertisement",
+    "comments": "",
+    "next_follow_up": "2025-07-31",
+    "confirm_as_business": false,
+    "created_at": "2025-05-10T09:56:57.059Z",
+    "service_types": [
+      2,
+      4,
+      7
+    ]
+  }
+},
+{
+  "model": "base.enquiry",
+  "pk": 4,
+  "fields": {
+    "customer_name": "Ram Charan",
+    "mobile_number": "+919447894435",
+    "email": "hji@kjj.hj",
+    "address": "1floor, Balaji Shopping Centre, Vip Road, 1floor, Balaji Shopping Centre, Karelibaug",
+    "landmark": null,
+    "state": "Assam",
+    "district": "Bajali",
+    "plot_area": "10.00",
+    "plot_unit": "acres",
+    "project_type": 1,
+    "estimate_amount": "1000000.00",
+    "proposal_required": false,
+    "status": "business",
+    "heard_from": "events",
+    "comments": "",
+    "next_follow_up": null,
+    "confirm_as_business": true,
+    "created_at": "2025-03-10T11:05:58.844Z",
+    "service_types": [
+      5,
+      6
+    ]
+  }
+},
+{
+  "model": "base.enquiry",
+  "pk": 5,
+  "fields": {
+    "customer_name": "Kiran Ratan",
+    "mobile_number": "+918884588888",
+    "email": "jdsgkahfhk@fdsagk.com",
+    "address": "2, 5th Main, T B R Building, Next To Tribhuvan Theater, Gandhi Nagar",
+    "landmark": "Statue Of Liberty",
+    "state": "Assam",
+    "district": "Bajali",
+    "plot_area": "10.00",
+    "plot_unit": "acres",
+    "project_type": 2,
+    "estimate_amount": "400000.00",
+    "proposal_required": false,
+    "status": "business",
+    "heard_from": "events",
+    "comments": "",
+    "next_follow_up": null,
+    "confirm_as_business": true,
+    "created_at": "2025-07-16T12:00:43.478Z",
+    "service_types": [
+      6,
+      7
+    ]
+  }
+},
+{
+  "model": "base.enquiry",
+  "pk": 6,
+  "fields": {
+    "customer_name": "Mohan Prathap",
+    "mobile_number": "+911234567889",
+    "email": "easdfsa@dsgsdakj.com",
+    "address": "374 Konnur High Road, Perambur",
+    "landmark": null,
+    "state": "Delhi",
+    "district": "New Delhi",
+    "plot_area": "50.00",
+    "plot_unit": "cent",
+    "project_type": 2,
+    "estimate_amount": "600000.00",
+    "proposal_required": false,
+    "status": "business",
+    "heard_from": "tender",
+    "comments": "",
+    "next_follow_up": null,
+    "confirm_as_business": true,
+    "created_at": "2025-07-20T06:52:07.943Z",
+    "service_types": [
+      5
+    ]
+  }
+},
+{
+  "model": "base.enquiry",
+  "pk": 20,
+  "fields": {
+    "customer_name": "John Dominic",
+    "mobile_number": "+919447294635",
+    "email": "sdfas@gmail.com",
+    "address": "Ist Floor, Laxmi Bldg, D Bhadkamkar Marg, Opp Nazz Cinema, Girgaon",
+    "landmark": null,
+    "state": "Himachal Pradesh",
+    "district": "Bilaspur",
+    "plot_area": "7.00",
+    "plot_unit": "acres",
+    "project_type": 1,
+    "estimate_amount": "550000.00",
+    "proposal_required": true,
+    "status": "business",
+    "heard_from": "advertisement",
+    "comments": "",
+    "next_follow_up": null,
+    "confirm_as_business": true,
+    "created_at": "2025-01-21T07:50:58.521Z",
+    "service_types": [
+      5
+    ]
+  }
+},
+{
+  "model": "base.enquiry",
+  "pk": 21,
+  "fields": {
+    "customer_name": "Sara Catherine",
+    "mobile_number": "+917812345634",
+    "email": "sdfadfkjh@gmail.com",
+    "address": "1, Noon Masjid, Ag Rd, Andheri(e)",
+    "landmark": "Westigali Hills",
+    "state": "Andaman And Nicobar Islands",
+    "district": "Nicobars",
+    "plot_area": "40.00",
+    "plot_unit": "cent",
+    "project_type": 1,
+    "estimate_amount": "340000.00",
+    "proposal_required": false,
+    "status": "enquired",
+    "heard_from": "reference",
+    "comments": "",
+    "next_follow_up": "2025-08-08",
+    "confirm_as_business": false,
+    "created_at": "2025-07-21T07:57:18.488Z",
+    "service_types": [
+      4,
+      6
+    ]
+  }
+},
+{
+  "model": "base.enquiry",
+  "pk": 22,
+  "fields": {
+    "customer_name": "Ria Rajendra",
+    "mobile_number": "+917891234543",
+    "email": "dsafasd@gmail.com",
+    "address": "126, Ashish Indl Estate, Gokhale Road ( South ), Dadar (w)",
+    "landmark": null,
+    "state": "Bihar",
+    "district": "Purbi Champaran",
+    "plot_area": "8.00",
+    "plot_unit": "acres",
+    "project_type": 2,
+    "estimate_amount": "780000.00",
+    "proposal_required": false,
+    "status": "business",
+    "heard_from": "events",
+    "comments": "",
+    "next_follow_up": null,
+    "confirm_as_business": true,
+    "created_at": "2025-07-21T09:34:09.776Z",
+    "service_types": [
+      5
+    ]
+  }
+},
+{
+  "model": "base.customer",
+  "pk": 2,
+  "fields": {
+    "name": "Harsha Mehta",
+    "mobile_number": "+918888324123",
+    "email": "paucebouruje-3284@yopmail.com",
+    "address": "Villa No: 34, Shobha Villas, Church Street",
+    "landmark": null,
+    "state": "Bihar",
+    "district": "Purbi Champaran",
+    "heard_from": "reference",
+    "created_at": "2025-07-08T06:56:42.977Z"
+  }
+},
+{
+  "model": "base.customer",
+  "pk": 3,
+  "fields": {
+    "name": "Ram Charan",
+    "mobile_number": "+919447894435",
+    "email": "hji@kjj.hj",
+    "address": "1floor, Balaji Shopping Centre, Vip Road, 1floor, Balaji Shopping Centre, Karelibaug",
+    "landmark": null,
+    "state": "Assam",
+    "district": "Bajali",
+    "heard_from": "events",
+    "created_at": "2025-07-10T11:05:58.896Z"
+  }
+},
+{
+  "model": "base.customer",
+  "pk": 4,
+  "fields": {
+    "name": "Kiran Ratan",
+    "mobile_number": "+918884588888",
+    "email": "jdsgkahfhk@fdsagk.com",
+    "address": "2, 5th Main, T B R Building, Next To Tribhuvan Theater, Gandhi Nagar",
+    "landmark": "Statue Of Liberty",
+    "state": "Assam",
+    "district": "Bajali",
+    "heard_from": "events",
+    "created_at": "2025-07-16T12:00:43.538Z"
+  }
+},
+{
+  "model": "base.customer",
+  "pk": 5,
+  "fields": {
+    "name": "Mohan Prathap",
+    "mobile_number": "+911234567889",
+    "email": "easdfsa@dsgsdakj.com",
+    "address": "374 Konnur High Road, Perambur",
+    "landmark": null,
+    "state": "Delhi",
+    "district": "New Delhi",
+    "heard_from": "tender",
+    "created_at": "2025-07-20T07:40:03.227Z"
+  }
+},
+{
+  "model": "base.customer",
+  "pk": 6,
+  "fields": {
+    "name": "John Dominic",
+    "mobile_number": "+919447294635",
+    "email": "sdfas@gmail.com",
+    "address": "Ist Floor, Laxmi Bldg, D Bhadkamkar Marg, Opp Nazz Cinema, Girgaon",
+    "landmark": null,
+    "state": "Himachal Pradesh",
+    "district": "Bilaspur",
+    "heard_from": "advertisement",
+    "created_at": "2025-07-21T07:57:51.765Z"
+  }
+},
+{
+  "model": "base.customer",
+  "pk": 7,
+  "fields": {
+    "name": "Ria Rajendra",
+    "mobile_number": "+917891234543",
+    "email": "dsafasd@gmail.com",
+    "address": "126, Ashish Indl Estate, Gokhale Road ( South ), Dadar (w)",
+    "landmark": null,
+    "state": "Bihar",
+    "district": "Purbi Champaran",
+    "heard_from": "events",
+    "created_at": "2025-07-21T09:34:52.869Z"
+  }
+},
+{
+  "model": "base.payment",
+  "pk": 1,
+  "fields": {
+    "work": 1,
+    "amount": "200000.00",
+    "payment_at": "2025-03-10T13:30:00Z",
+    "added_at": "2025-03-14T06:12:02.457Z",
+    "mode": "upi"
+  }
+},
+{
+  "model": "base.payment",
+  "pk": 2,
+  "fields": {
+    "work": 1,
+    "amount": "100000.00",
+    "payment_at": "2025-04-14T12:04:15Z",
+    "added_at": "2025-04-14T06:34:19.460Z",
+    "mode": "netbanking"
+  }
+},
+{
+  "model": "base.payment",
+  "pk": 3,
+  "fields": {
+    "work": 1,
+    "amount": "200000.00",
+    "payment_at": "2025-07-16T19:30:00Z",
+    "added_at": "2025-07-15T14:11:27.293Z",
+    "mode": "cash"
+  }
+},
+{
+  "model": "base.payment",
+  "pk": 4,
+  "fields": {
+    "work": 3,
+    "amount": "250000.00",
+    "payment_at": "2025-07-14T19:00:00Z",
+    "added_at": "2025-07-20T13:32:31.903Z",
+    "mode": "netbanking"
+  }
+},
+{
+  "model": "base.payment",
+  "pk": 5,
+  "fields": {
+    "work": 2,
+    "amount": "500000.00",
+    "payment_at": "2025-07-08T13:00:00Z",
+    "added_at": "2025-07-21T07:55:26.713Z",
+    "mode": "card"
+  }
+},
+{
+  "model": "accounts.user",
+  "fields": {
+    "password": "pbkdf2_sha256$1000000$9YZJjuZeaDcO8QtTI5BiDp$AGkH0lj5Cb22RB0HsGO6pg5JYBYtwmvyx9DCDzRAnjw=",
+    "last_login": "2025-08-30T04:48:20.121Z",
+    "is_superuser": false,
+    "username": "rj_mendus",
+    "first_name": "Rohit",
+    "last_name": "Mendus",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2025-07-10T05:33:34.882Z",
+    "role": "admin",
+    "email": "rohitmendus@gmail.com",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "accounts.user",
+  "fields": {
+    "password": "pbkdf2_sha256$1000000$MhMTL4vFDUBQEvBc11UAUF$53hlvOVxaQOI6LD/zA1626KanvtjeaC/b0qrPaWI9bw=",
+    "last_login": "2025-07-23T09:26:58.474Z",
+    "is_superuser": false,
+    "username": "rithik_unni",
+    "first_name": "Rithik",
+    "last_name": "Unni",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2025-07-10T06:35:31.223Z",
+    "role": "engineer",
+    "email": "rohit.mendus@ipsrsolutions.com",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "accounts.user",
+  "fields": {
+    "password": "pbkdf2_sha256$1000000$r6QMzyd3anibGEIWWkCmPA$kI0xCxhNPgz/B+49yh86m32fYmdNNJjw6a7+77t/xQQ=",
+    "last_login": "2025-07-22T08:34:43.785Z",
+    "is_superuser": false,
+    "username": "mahi",
+    "first_name": "Mahima",
+    "last_name": "Unnikrishnan",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2025-07-14T05:05:06.283Z",
+    "role": "assistant",
+    "email": "rohitmendus@hotmweail.com",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "accounts.user",
+  "fields": {
+    "password": "pbkdf2_sha256$1000000$WLw3gr7O4ectfeKANkp14y$kAEzQSmN2DjTt1h/40wJ2kPULm+88cOqUmW9OucQM2w=",
+    "last_login": "2025-07-21T08:16:20.954Z",
+    "is_superuser": false,
+    "username": "hrx",
+    "first_name": "Hrithik",
+    "last_name": "Roshan",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2025-07-15T15:16:27.454Z",
+    "role": "manager",
+    "email": "rohitmendus@hotmail.com",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "accounts.user",
+  "fields": {
+    "password": "pbkdf2_sha256$1000000$Zaw4FAN57jhXsGuQiOx0le$zak0MyaabgKTqtr97FIkwyO4mWnlole+zNhLnbDOddg=",
+    "last_login": "2025-07-20T07:21:44.319Z",
+    "is_superuser": false,
+    "username": "meera",
+    "first_name": "Meera",
+    "last_name": "Rajesh",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2025-07-20T07:20:43.409Z",
+    "role": "engineer",
+    "email": "lomoli3166@kissgy.com",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "accounts.user",
+  "fields": {
+    "password": "pbkdf2_sha256$1000000$5GiUSiHUwFIQ8aVcX72Yzi$zyX5QqxnRNMtEEFUXWOb+r9w0yhQAR4LxXjDTkbGZ6M=",
+    "last_login": "2025-07-20T07:23:06.640Z",
+    "is_superuser": false,
+    "username": "karthik",
+    "first_name": "Karthik",
+    "last_name": "Sreekumar",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2025-07-20T07:22:34.564Z",
+    "role": "engineer",
+    "email": "nikavih313@forexru.com",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "accounts.user",
+  "fields": {
+    "password": "pbkdf2_sha256$1000000$uGNBEjwPUmbY5cmcHCYJsU$tjwMAeqMi3P7ljjQRhh08dXQM33lrIH/l9LZytZjCrQ=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "nikhil",
+    "first_name": "Nikhil",
+    "last_name": "Karan",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2025-07-20T07:26:29.645Z",
+    "role": "engineer",
+    "email": "cexif58610@hadvar.com",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "base.work",
+  "pk": 1,
+  "fields": {
+    "customer": 2,
+    "plot_area": "10.00",
+    "plot_unit": "acres",
+    "project_type": 2,
+    "estimate_amount": "500000.00",
+    "proposal_required": true,
+    "status": "completed",
+    "site_visit_on": "2025-07-22T16:00:00Z",
+    "remarks": "A lot of external requirement needed!",
+    "site_engineer": [
+      "rithik_unni"
+    ],
+    "payment_remarks": "Money was recieved, but still pending",
+    "created_at": "2025-05-08T06:56:42.980Z",
+    "service_types": [
+      2,
+      4,
+      6
+    ]
+  }
+},
+{
+  "model": "base.work",
+  "pk": 2,
+  "fields": {
+    "customer": 3,
+    "plot_area": "10.00",
+    "plot_unit": "acres",
+    "project_type": 1,
+    "estimate_amount": "1000000.00",
+    "proposal_required": true,
+    "status": "completed",
+    "site_visit_on": "2025-07-30T16:30:00Z",
+    "remarks": "",
+    "site_engineer": [
+      "rithik_unni"
+    ],
+    "payment_remarks": "Amount is pending",
+    "created_at": "2025-07-10T11:05:58.898Z",
+    "service_types": [
+      5,
+      6
+    ]
+  }
+},
+{
+  "model": "base.work",
+  "pk": 3,
+  "fields": {
+    "customer": 4,
+    "plot_area": "10.00",
+    "plot_unit": "acres",
+    "project_type": 2,
+    "estimate_amount": "400000.00",
+    "proposal_required": false,
+    "status": "in-progress",
+    "site_visit_on": "2025-07-24T17:30:00Z",
+    "remarks": "",
+    "site_engineer": [
+      "rithik_unni"
+    ],
+    "payment_remarks": null,
+    "created_at": "2025-07-16T12:00:43.541Z",
+    "service_types": [
+      6,
+      7
+    ]
+  }
+},
+{
+  "model": "base.work",
+  "pk": 4,
+  "fields": {
+    "customer": 5,
+    "plot_area": "50.00",
+    "plot_unit": "cent",
+    "project_type": 2,
+    "estimate_amount": "600000.00",
+    "proposal_required": false,
+    "status": "assigned",
+    "site_visit_on": "2025-07-31T13:30:00Z",
+    "remarks": "",
+    "site_engineer": [
+      "karthik"
+    ],
+    "payment_remarks": null,
+    "created_at": "2025-07-20T07:40:03.232Z",
+    "service_types": [
+      5
+    ]
+  }
+},
+{
+  "model": "base.work",
+  "pk": 5,
+  "fields": {
+    "customer": 6,
+    "plot_area": "7.00",
+    "plot_unit": "acres",
+    "project_type": 1,
+    "estimate_amount": "550000.00",
+    "proposal_required": true,
+    "status": "assigned",
+    "site_visit_on": "2025-08-01T13:30:00Z",
+    "remarks": "",
+    "site_engineer": [
+      "meera"
+    ],
+    "payment_remarks": null,
+    "created_at": "2025-07-21T07:57:51.773Z",
+    "service_types": [
+      5
+    ]
+  }
+},
+{
+  "model": "base.work",
+  "pk": 6,
+  "fields": {
+    "customer": 7,
+    "plot_area": "8.00",
+    "plot_unit": "acres",
+    "project_type": 2,
+    "estimate_amount": "780000.00",
+    "proposal_required": false,
+    "status": "assigned",
+    "site_visit_on": "2025-07-21T15:30:48Z",
+    "remarks": "",
+    "site_engineer": [
+      "rithik_unni"
+    ],
+    "payment_remarks": null,
+    "created_at": "2025-05-21T09:34:52.892Z",
+    "service_types": [
+      5
+    ]
+  }
+}
+]
