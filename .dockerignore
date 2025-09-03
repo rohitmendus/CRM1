@@ -6,3 +6,4 @@ venv/
 migrations/
 __pycache__/
 Dockerfile
+docker-compose.yml
